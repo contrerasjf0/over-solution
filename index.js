@@ -12,7 +12,15 @@ async function init () {
     method: 'GET',
     path: '/',
     handler: (req, h) => {
-      return 'Hola mundo ...'
+      return h.response('Hola mundo ...').code(200)
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/redirect',
+    handler: (req, h) => {
+      return h.redirect('http://google.com')
     }
   })
 
@@ -25,5 +33,3 @@ async function init () {
 
   console.log(`Servidor lanzado en: ${server.info.uri}`)
 }
-
-init()
