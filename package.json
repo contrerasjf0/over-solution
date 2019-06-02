@@ -1,0 +1,20 @@
+{
+  "name": "over-solution",
+  "version": "1.0.0",
+  "description": "This is a site where you can find solution such as overflow",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon",
+    "lint": "standard",
+    "lint-fix": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "standard": "^12.0.1"
+  },
+  "dependencies": {
+    "hapi": "^18.1.0"
+  }
+}
