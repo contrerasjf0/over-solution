@@ -1,4 +1,3 @@
-
 'use strict'
 
 const Hapi = require('hapi')
@@ -39,6 +38,25 @@ async function init () {
         return h.view('index', {
           title: 'home'
         })
+      }
+    })
+
+    server.route({
+      method: 'GET',
+      path: '/register',
+      handler: (req, h) => {
+        return h.view('register', {
+          title: 'Registro'
+        })
+      }
+    })
+
+    server.route({
+      method: 'POST',
+      path: '/create-user',
+      handler: (req, h) => {
+        console.log(req.payload)
+        return 'Usuario creado'
       }
     })
 
