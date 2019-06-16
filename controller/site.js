@@ -33,8 +33,18 @@ function notFound (req, h) {
 }
 
 
+function fileNotFound (req, h) {
+  const response = req.response
+  if (response.isBoom && response.output.statusCode === 404) {
+    return h.view('404', {}, { layout: 'error-layout' }).code(404)
+  }
+
+  return h.continue
+}
+
 module.exports = {
   home: home,
+  fileNotFound: fileNotFound,
   login: login,
   notFound: notFound,
   register: register
