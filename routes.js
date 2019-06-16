@@ -1,6 +1,8 @@
-onst Joi = require('joi')
-const site = require('./controllers/site')
-const user = require('./controllers/user')
+'use strict'
+
+const Joi = require('joi')
+const site = require('./controller/site')
+const user = require('./controller/user')
 
 module.exports = [
   {
@@ -14,6 +16,7 @@ module.exports = [
     handler: site.register
   },
   {
+    path: '/create-user',
     method: 'POST',
     options: {
       validate: {
@@ -24,8 +27,25 @@ module.exports = [
         }
       }
     },
-    path: '/create-user',
     handler: user.createUser
+  },
+  {
+    method: 'GET',
+    path: '/login',
+    handler: site.login
+  },
+  {
+    path: '/validate-user',
+    method: 'POST',
+    options: {
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          password: Joi.string().required().min(6)
+        }
+      }
+    },
+    handler: user.validateUser
   },
   {
     method: 'GET',
