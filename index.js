@@ -2,6 +2,7 @@
 
 const Hapi = require('hapi')
 const crumb = require('crumb')
+const hapiDevErrors = require('hapi-dev-errors')
 const Blankie = require('blankie')
 const Scooter = require('@hapi/scooter')
 const handlerbars = require('./lib/helpers')
@@ -40,7 +41,7 @@ async function init () {
         }
       }
     })
-
+ 
     await server.register({
       plugin: crumb,
       options: {
@@ -66,7 +67,14 @@ async function init () {
           scriptSrc: `'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com/ https://code.jquery.com/`,
           generateNonces: false
         }
-    }]);
+    }])
+
+    await server.register({
+      plugin: hapiDevErrors,
+      options: {
+        showErrors: process.env.NODE_ENV !== 'prod'
+      }
+    })
 
     server.method('setAnswerRight', methods.setAnswerRight)
     server.method('getLast', methods.getLast, {
