@@ -2,6 +2,8 @@
 
 const Hapi = require('hapi')
 const crumb = require('crumb')
+const Blankie = require('blankie')
+const Scooter = require('@hapi/scooter')
 const handlerbars = require('./lib/helpers')
 const inert = require('inert')
 const good = require('@hapi/good');
@@ -54,6 +56,17 @@ async function init () {
         prefix: 'api'
       }
     })
+
+    await server.register([Scooter, {
+        plugin: Blankie,
+        options: {
+          defaultSrc: `'self' 'unsafe-inline'`,
+          styleSrc: `'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com`,
+          fontSrc: `'self' 'unsafe-inline' data:`,
+          scriptSrc: `'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com/ https://code.jquery.com/`,
+          generateNonces: false
+        }
+    }]);
 
     server.method('setAnswerRight', methods.setAnswerRight)
     server.method('getLast', methods.getLast, {
